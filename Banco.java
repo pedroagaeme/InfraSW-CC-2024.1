@@ -48,27 +48,18 @@ class Conta {
     } 
 }
 
-public class exercicio1 {
+public class Banco {
     public static void main(String[] args) {
         Conta conta = new Conta(1000);
-        (new Thread(() -> {conta.Deposito(500.00);})).start();
-        (new Thread(() -> {conta.Deposito(500.00);})).start();
-        (new Thread(() -> {conta.Saque(3500.00);})).start();
-        (new Thread(() -> {conta.Saque(750.50);})).start();
-        (new Thread(() -> {conta.Deposito(690.35);})).start();
-        (new Thread(() -> {conta.Saque(96.55);})).start();
-        (new Thread(() -> {conta.Saque(70.40);})).start();
-        (new Thread(() -> {conta.Saque(700.00);})).start();
-        (new Thread(() -> {conta.Deposito(12.00);})).start();
-        (new Thread(() -> {conta.Saque(1500.00);})).start();
-        (new Thread(() -> {conta.Saque(1000.00);})).start();
-        (new Thread(() -> {conta.Deposito(460.20);})).start();
-        (new Thread(() -> {conta.Deposito(150.50);})).start();
-        (new Thread(() -> {conta.Deposito(450.50);})).start();
-        (new Thread(() -> {conta.Saque(950.00);})).start();
-        (new Thread(() -> {conta.Deposito(500.00);})).start();
-        (new Thread(() -> {conta.Saque(750.00);})).start();
-        (new Thread(() -> {conta.Saque(750.00);})).start();
-        (new Thread(() -> {conta.Saque(750.00);})).start();
+        int operacao;
+        for (int i = 0; i < 10; i++) {
+            operacao = (int)(Math.random() * 1000);
+            if (operacao % 2 == 0) {
+            (new Thread(() -> {conta.Deposito(Math.random() * 1000);})).start();
+            }
+            else {
+            (new Thread(() -> {conta.Saque(Math.random() * 1000);})).start();
+            }
+        }
     }
 }

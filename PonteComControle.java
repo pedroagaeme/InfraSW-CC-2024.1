@@ -52,7 +52,7 @@ public class PonteComControle {
         ExecutorService executor = Executors.newFixedThreadPool(10);
         Ponte ponte = new Ponte();
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 1; i <= 10; i++) {
             if (i % 2 == 0) {
                 executor.execute(new Carro("direita", i, ponte));
             } else {
