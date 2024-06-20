@@ -1,8 +1,9 @@
+import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 class Conta {
-    private double saldo = 0;
-    private final ReentrantLock lock = new ReentrantLock();
+    private double saldo;
+    private final Lock lock = new ReentrantLock();
 
     public Conta(double saldo_inicial) {
         saldo = saldo_inicial;
@@ -39,25 +40,35 @@ class Conta {
 
     public void Checar_saldo() {
         if(saldo >= 0) {
-                System.out.printf("Saldo atual: %.2f\n", saldo);
-            }
-            else {
-                System.out.println("Ocorreu o seguinte erro: saldo negativo");
-            }
+            System.out.printf("Saldo atual: %.2f\n", saldo);
+        }
+        else {
+            System.out.println("Ocorreu o seguinte erro: saldo negativo");
+        }
     } 
 }
 
 public class exercicio1 {
     public static void main(String[] args) {
         Conta conta = new Conta(1000);
-        (new Thread(() -> {conta.Deposito(500);})).start();
-        (new Thread(() -> {conta.Saque(700);})).start();
-        (new Thread(() -> {conta.Deposito(500);})).start();
-        (new Thread(() -> {conta.Saque(900);})).start();
-        (new Thread(() -> {conta.Deposito(500);})).start();
-        (new Thread(() -> {conta.Saque(1000);})).start();
-        (new Thread(() -> {conta.Deposito(500);})).start();
-        (new Thread(() -> {conta.Saque(2000);})).start();
-        (new Thread(() -> {conta.Deposito(500);})).start();
+        (new Thread(() -> {conta.Deposito(500.00);})).start();
+        (new Thread(() -> {conta.Deposito(500.00);})).start();
+        (new Thread(() -> {conta.Saque(3500.00);})).start();
+        (new Thread(() -> {conta.Saque(750.50);})).start();
+        (new Thread(() -> {conta.Deposito(690.35);})).start();
+        (new Thread(() -> {conta.Saque(96.55);})).start();
+        (new Thread(() -> {conta.Saque(70.40);})).start();
+        (new Thread(() -> {conta.Saque(700.00);})).start();
+        (new Thread(() -> {conta.Deposito(12.00);})).start();
+        (new Thread(() -> {conta.Saque(1500.00);})).start();
+        (new Thread(() -> {conta.Saque(1000.00);})).start();
+        (new Thread(() -> {conta.Deposito(460.20);})).start();
+        (new Thread(() -> {conta.Deposito(150.50);})).start();
+        (new Thread(() -> {conta.Deposito(450.50);})).start();
+        (new Thread(() -> {conta.Saque(950.00);})).start();
+        (new Thread(() -> {conta.Deposito(500.00);})).start();
+        (new Thread(() -> {conta.Saque(750.00);})).start();
+        (new Thread(() -> {conta.Saque(750.00);})).start();
+        (new Thread(() -> {conta.Saque(750.00);})).start();
     }
 }
