@@ -7,7 +7,7 @@ class Carro implements Runnable {
 
     public Carro(String direcao, int numero_carro) {
         this.direcao = direcao;
-        this.id = numero_carro;
+        this.numero_carro = numero_carro;
     }
 
     @Override
