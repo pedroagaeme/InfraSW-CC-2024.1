@@ -1,9 +1,8 @@
-import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 class Conta {
     private double saldo;
-    private final Lock lock = new ReentrantLock();
+    private final ReentrantLock lock = new ReentrantLock();
 
     public Conta(double saldo_inicial) {
         saldo = saldo_inicial;
@@ -52,13 +51,16 @@ public class Banco {
     public static void main(String[] args) {
         Conta conta = new Conta(1000);
         int operacao;
+        Runnable DepositoAleatorio = () -> {conta.Deposito(Math.random() * 1000);};
+        Runnable SaqueAleatorio = () -> {conta.Saque(Math.random() * 2000);};
+
         for (int i = 0; i < 10; i++) {
             operacao = (int)(Math.random() * 1000);
             if (operacao % 2 == 0) {
-            (new Thread(() -> {conta.Deposito(Math.random() * 1000);})).start();
+            (new Thread(DepositoAleatorio)).start();
             }
             else {
-            (new Thread(() -> {conta.Saque(Math.random() * 1000);})).start();
+            (new Thread(SaqueAleatorio)).start();
             }
         }
     }

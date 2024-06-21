@@ -1,6 +1,3 @@
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 class Carro implements Runnable {
     private final String direcao;
     private final int numero_carro;
@@ -24,16 +21,14 @@ class Carro implements Runnable {
 
 public class PonteSemControle {
     public static void main(String[] args) {
-        ExecutorService executor = Executors.newFixedThreadPool(10);
-
-        for (int i = 0; i < 10; i++) {
+        
+        for (int i = 1; i <= 10; i++) {
             if (i % 2 == 0) {
-                executor.execute(new Carro("direita", i));
+                (new Thread(new Carro("direita", i))).start();
             } else {
-                executor.execute(new Carro("esquerda", i));
+                (new Thread(new Carro("esquerda", i))).start();
             }
         }
-
-        executor.shutdown();
     }
 }
+

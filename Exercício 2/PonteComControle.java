@@ -1,6 +1,3 @@
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 class Carro implements Runnable {
@@ -29,7 +26,7 @@ class Carro implements Runnable {
 }
 
 class Ponte {
-    private final Lock lock = new ReentrantLock();
+    private final ReentrantLock lock = new ReentrantLock();
 
     public void atravessar(Carro carro) {
         lock.lock();
@@ -49,17 +46,14 @@ class Ponte {
 
 public class PonteComControle {
     public static void main(String[] args) {
-        ExecutorService executor = Executors.newFixedThreadPool(10);
         Ponte ponte = new Ponte();
 
         for (int i = 1; i <= 10; i++) {
             if (i % 2 == 0) {
-                executor.execute(new Carro("direita", i, ponte));
+                (new Thread(new Carro("direita", i, ponte))).start();
             } else {
-                executor.execute(new Carro("esquerda", i, ponte));
+                (new Thread(new Carro("esquerda", i, ponte))).start();
             }
         }
-
-        executor.shutdown();
     }
 }
