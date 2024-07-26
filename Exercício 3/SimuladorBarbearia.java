@@ -26,41 +26,41 @@ class Barbearia {
         while(true) {
             this.lock.lock();
             try {
-                if(cadeirasOcupadas == 0) {
-                    precisaAcordar = true;
+                if(this.cadeirasOcupadas == 0) {
+                    this.precisaAcordar = true;
                     System.out.println("Sem clientes, barbeiro foi dormir...");
                     while(cadeirasOcupadas == 0) {
                         this.novoCliente.await();
                     }
                     System.out.println("Barbeiro Acordou!");
                 }
-                cadeirasOcupadas--;
+                this.cadeirasOcupadas--;
             }
             finally {
-                lock.unlock();
+                this.lock.unlock();
             }
             ClienteBarbearia clienteEmAtendimento = this.cadeira[this.vez];
             System.out.println(clienteEmAtendimento.checarNome() + " passou a ser atendido pelo barbeiro.");
-            this.vez = (vez + 1) % capacidade;
+            this.vez = (this.vez + 1) % this.capacidade;
             Thread.sleep(50);
             System.out.println(clienteEmAtendimento.checarNome() + " terminou de ser atendido pelo barbeiro.");
         }
     }
 
-    public void entrarBarbearia(ClienteBarbearia cliente) throws InterruptedException{
+    public void entrarBarbearia(ClienteBarbearia cliente) throws InterruptedException {
         Thread.sleep((long) (Math.random() * 5000));
         System.out.println(cliente.checarNome() + " entrou na barbearia.");
         this.lock.lock();
         try {
-            if (cadeirasOcupadas < capacidade) {
+            if (this.cadeirasOcupadas < this.capacidade) {
                 this.cadeirasOcupadas++;
-                System.out.println(cliente.checarNome() + " sentou na cadeira " + (proxCadeira + 1) + ". Cadeiras Ocupadas: " + cadeirasOcupadas + ".");
+                System.out.println(cliente.checarNome() + " sentou na cadeira " + (this.proxCadeira + 1) + ". Cadeiras Ocupadas: " + this.cadeirasOcupadas + ".");
                 this.cadeira[this.proxCadeira] = cliente;
-                this.proxCadeira = (proxCadeira + 1) % capacidade;
-                if (precisaAcordar) {
+                this.proxCadeira = (this.proxCadeira + 1) % this.capacidade;
+                if (this.precisaAcordar) {
                     System.out.println(cliente.checarNome() + " foi acordar o barbeiro...");
                     this.novoCliente.signal();
-                    precisaAcordar = false;
+                    this.precisaAcordar = false;
                 }
             }
             else {

@@ -80,7 +80,7 @@ class Restaurante {
         while (true) {
             this.lock.lock();
             try {
-                while (vagasEmUso == CAPACIDADE) {
+                while (this.vagasEmUso == this.CAPACIDADE) {
                     this.vagasLivres = 0;
                     this.esvaziou.await();
                 }
@@ -97,7 +97,7 @@ class Restaurante {
                     this.novasVagas.signalAll();
                 }
                 else {
-                    while(vagasLivres + vagasEmUso < CAPACIDADE) {
+                    while(this.vagasLivres + this.vagasEmUso < this.CAPACIDADE) {
                         this.vagasLivres++;
                     }
                 }
@@ -113,7 +113,7 @@ class Restaurante {
         try {
             if (this.vagasLivres == 0) {
                 this.fila.add(cliente);
-                System.out.println(cliente.checarNome() + " entrou na fila de espera. Primeiro da Fila: " + fila.get(0).checarNome() + ".");
+                System.out.println(cliente.checarNome() + " entrou na fila de espera. Primeiro da Fila: " + this.fila.get(0).checarNome() + ".");
                 while(cliente.checarVaga() == false)
                     this.novasVagas.await();
             }
@@ -124,7 +124,7 @@ class Restaurante {
             }
             }
          finally {
-            lock.unlock();
+            this.lock.unlock();
         }
     
         if (cliente.checarVaga() == true) {
@@ -132,7 +132,7 @@ class Restaurante {
             Thread.sleep((long) (Math.random() * 1000));
             this.lock.lock();
             try {
-                vagasEmUso--;
+                this.vagasEmUso--;
                 System.out.println(cliente.checarNome() + " terminou de comer e saiu. Lugares vazios: " + (5 - vagasEmUso) + ".");
                 if(this.vagasEmUso == 0) {
                     this.esvaziou.signal();
